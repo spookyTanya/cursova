@@ -57,10 +57,14 @@ app.use((req, res, next) => {
 	req.session.init = 'init';
 	next();
 });
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/main', mainRouter);
-
+app.get('/', function(req, res){
+	res.redirect('/main');
+});
+app.get('/favicon.ico', (req, res) => res.sendStatus(204));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
