@@ -42,7 +42,7 @@ router.post('/signin', redirectMain,  function(req, res) {
 		req.session.userName = result[0].Name + ' ' + result[0].Surname;
 		req.session.userId = result[0].Id;
 		req.session.email = req.body.email;
-		console.log('session', req.session);
+		console.log('session', req.session, result);
 		res.redirect('/main');
 	});
 });

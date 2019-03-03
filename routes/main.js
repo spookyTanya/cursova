@@ -11,8 +11,6 @@ global.document = document;
 
 const $ = jQuery = require('jquery')(window);
 
-const promise = require('../promise');
-
 const transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
@@ -274,5 +272,12 @@ router.get('/rooms/shedule/:id/:date', redirectLogin, function(req, res){
 	});
 
 });
+
+router.get('/logout', function(req, res){
+	req.session.userName = '';
+	req.session.userId = null;
+	req.session.email = '';
+	res.redirect('/')
+})
 
 module.exports = router;

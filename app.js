@@ -4,18 +4,21 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
+var MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const mainRouter = require('./routes/main');
+const con = require('./db.js');
 
 const app = express();
 
 // view engine setup	
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.set('trust proxy', 1);
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -27,20 +30,37 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 
+let options = {
+	host: "us-cdbr-iron-east-03.cleardb.net",
+  	user: "b137b481565ba4",
+  	password: "3d0e4252",
+  	database: "heroku_656924a3d6f9fc3"
+}
+var sessionStore = new MySQLStore(options);
+
 app.use(session({
-	name: 'tania\'s cookie',
+	key: 'myCookie',
+	secret: 'secret12345',
+	store: sessionStore,
 	resave: false,
 	saveUninitialized: false,
-	secret: 'test123587897',
 	cookie: {
-		maxAge: 1000 * 60 * 15,
-		sameSite: true,
+		originalMaxAge: 1000 * 60 * 5,
+		maxAge: 60000 * 5,
+		//secure: true,
+		path: '/',
+		//httpOnly: false,
 	}
 }));
 
+app.use((req, res, next) => {
+	req.session.init = 'init';
+	next();
+});
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/main', mainRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
