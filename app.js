@@ -6,12 +6,10 @@ const logger = require('morgan');
 const session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const mainRouter = require('./routes/main');
-const con = require('./db.js');
 
 const app = express();
 
@@ -35,7 +33,7 @@ let options = {
   	user: "b137b481565ba4",
   	password: "3d0e4252",
   	database: "heroku_656924a3d6f9fc3"
-}
+};
 var sessionStore = new MySQLStore(options);
 
 app.use(session({
