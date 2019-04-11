@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="./../public/stylesheets/rooms.css" />
+
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="rooms_title row">
+			<h2>Rooms information</h2>
+		</div>
+		<div class="row">
+			<div class="rooms-container">
+				<% if (rooms) { %>
+					<% rooms.forEach(function(item) { %>
+						<div class="item">
+							<p>Name: <%= item.name %></p>
+							<p>Number of seats: <%= item.accom %></p>
+							<p>Number of Computers: <%= item.computers %></p>
+							<p>Has a projector: <% if(item.projector == 1) {%>
+									yes
+								<% } else { %>
+									no
+								<% }%></p>
+							<div class="shedule_links">
+								<a href='/main/rooms/shedule/<%= item.id %>/today'>Shedule for today</a>
+								<a href='/main/rooms/shedule/<%= item.id %>/tomorrow'>Shedule for tomorrow</a>
+								<a href='/main/rooms/shedule/<%= item.id %>/week'>Shedule for week</a>
+							</div>
+						</div>
+	   				<% }); %>
+   				<% } else { %>
+						<div> This room will be available for <%= days %> </div>
+				<% } %>
+			</div>
+			<a class="go_back">Back</a>
+		</div>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script>
+        $('.go_back').on('click', function(){
+            window.history.back();
+        });
+	</script>
+</body>
+</html>

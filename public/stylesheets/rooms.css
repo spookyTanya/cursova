@@ -1,0 +1,49 @@
+.rooms_title {
+  height: 50px;
+  vertical-align: center;
+  background-color: #007BCD;
+  box-shadow: 0 0 10px 1px #3F4756; }
+.rooms_title > h2 {
+  font-size: 30px;
+  margin: 0; }
+
+.rooms-container {
+  overflow-y: auto;
+  height: calc(100vh - 50px);
+  padding: 20px;
+  margin: 0 auto;
+  min-width: 300px;
+  background-color: #2a6b96; }
+
+.item {
+  border-radius: 10px;
+  background-color: #E6F4F1;
+  color: #3F4756;
+  padding: 15px;
+  margin: 20px; }
+.item .shedule_links {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row; }
+.item p {
+  font-size: 18px;
+  margin: 0; }
+.item a {
+  text-decoration: none;
+  margin: 0 5px;
+  padding: 5px 15px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #3F4756; }
+.item a::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  transition: width .4s;
+  background-color: #007BCD; }
+.item a:hover::after {
+  width: 100%; }
+
+/*# sourceMappingURL=rooms.css.map */

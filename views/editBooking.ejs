@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="./stylesheets/main.css" />
+</head>
+<body>
+	<div class="container">
+		<h2>Edit page</h2>
+		<div class="item">
+			<% if (booking) { %>
+				<form class="item" action="/main/mybooking/editSend" method="post">
+					Name: <input type="text" value="<%= booking.name %>" name="name">
+        			Date: <input type="date" value="<%= booking.date %>" name="newdate">
+        		 	Room: <input type="text" value="<%= booking.room %>" name="room"> 
+        		 	Lesson: <input type="text" value="<%= booking.lesson %>" name="lesson">  
+        		 	Teacher: <input type="text" value="<%= booking.teacher%>" name="teacher">
+        		 	<input type="text" value="<%= booking.id%>" name="ID" class="hidden">
+        		 	<button type="submit">Submit</button>
+        		 	<a class="go_back">Back</a>
+        		</form>
+   			<% } %>
+		</div>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script>
+		$('.go_back').on('click', function(){
+			window.history.back();
+		});
+	</script>
+</body>
+</html>
