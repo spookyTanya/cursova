@@ -8,34 +8,21 @@
 </head>
 <body>
 <div class="container-fluid main">
-	<div class="header row">
-		<!--		<div class="col-md-12 user_hello">
-			<p>Hi 	<%= data.userName %>, how is your day?
-			</p>
-		</div>-->
-		<div class="navigtion-wraper">
-			<ul class="main-navigation ">
-				<!--col-xs-12 col-sm-3 -->
-				<li>You are looged as <%= data.userName %> </li>
-				<li><a href="/main/mybooking">My bookings</a></li>
-				<li><a href="/main/createPage">Book a room</a></li>
-				<li><a href="/main/rooms">Rooms</a></li>
-				<li><a href="/main/logout">Log out</a></li>
-			</ul>
-		</div>
-	</div>
+	<%- include('header', {userName: userName}); -%>
 	<div class="main-content row">
 		<div class="notifications">
 			<% if (notification.length > 0) { %>
-				<div class="container-fluid">
-					<h2 class="notifications-title">YOUR NOTIFICATIONS:</h2>
+				<div class="container">
+					<h2 class="notifications-title">Бронювання цього тижня:</h2>
 					<div class="row notifications-list">
 						<% notification.forEach(function(item) { %>
 							<div class="col-sm-4 col-xs-12 item_notification">
-								<p><span>Name:</span> <%= item.name %> </p>
-								<p><span>Date:</span> <%= item.date %> </p>
-								<p><span>Room:</span> <%= item.room %> </p>
-								<p><span>Lesson:</span> <%= item.lesson %> </p>
+								<div class="background">
+									<p><span>Назва:</span> <%= item.name %> </p>
+									<p><span>Дата:</span> <%= item.date %> </p>
+									<p><span>Кабінет:</span> <%= item.room %> </p>
+									<p><span>№ пари:</span> <%= item.lesson %> </p>
+								</div>
 							</div>
 						<% });%>
 					</div>

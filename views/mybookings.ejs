@@ -1,37 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="./stylesheets/mybookings.css" />
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/mybookings.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
 </head>
 <body>
-<div class="container-fluid">
-	<div class="mybookings_title row">
-		<h2>My bookings</h2>
-		<!--<a class="go_back">Back</a>-->
-	</div>
-		<div class="row">
-		<div class="items_container col-xs-12 ">
-			<% if (items.length > 0) { %>
-				<% items.forEach(function(item) { %>
-					<div class="item">
-						<p>Name: <%= item.name %></p>
-						<p>Date: <%= item.date %></p>
-						<p>Room: <%= item.room %></p>
-						<p>Lesson: <%= item.lesson %></p>
-						<div class="edit-delete_links">
-							<a href='/main/mybooking/edit/<%= item.id %>'>Edit</a>
-							<a href='/main/mybooking/delete/<%= item.id %>'>Delete</a>
-						</div>
-					</div>
-				<% }); %>
-			<% } else { %>
-				<p class="message">You have no bookings, <a href="/main/createPage">create one?</a></p>
-			<% } %>
-		</div>
-	</div>
+<div class="container-fluid main">
+    <%- include('header', {userName: userName}); -%>
+
+    <div class="container">
+        <div class="mybookings_title row">
+            <h2>Мої бронювання</h2>
+            <!--<a class="go_back">Back</a>-->
+        </div>
+        <div class="row items_container">
+            <% if (items.length > 0) { %>
+                <% items.forEach(function(item) { %>
+                    <div class="item col-sm-4 col-xs-12">
+                        <div class="background">
+                            <p><span>Назва: </span> <%= item.name %></p>
+                            <p><span>Дата: </span><%= item.date %></p>
+                            <p><span>Кабінет: </span><%= item.room %></p>
+                            <p><span>№ пари: </span><%= item.lesson %></p>
+                            <div class="edit-delete_links">
+                                <a href='/main/mybooking/edit/<%= item.id %>'>Редагувати</a>
+                                <a href='/main/mybooking/delete/<%= item.id %>'>Видалити</a>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="empty">
+                    <p class="message">Ви не створили жодного бронювання</p>
+                    <a href="/main/createPage">Створити бронювання</a>
+                    <button class="go_back">Назад</button>
+                </div>
+            <% } %>
+        </div>
+    </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

@@ -20,7 +20,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const redirectLogin = async (req, res, next) => {
-	console.log('to maaain', req.session);
+	// console.log('to maaain', req.session);
 	if(req.session.userName) {
 		// let today = new Date();
 		// const midnight = new Date();
@@ -64,9 +64,9 @@ router.get('/', redirectLogin, function(req, res) {
     midnight.setMinutes(0);
     var sql;
     if(req.session.superuser == 1){
-    	sql = 'SELECT shedule.Id, NumberOfLesson, Teacher, Date, shedule.Name, rooms.Name as rName FROM `shedule`, `rooms` WHERE `Date` > "' + midnight.toISOString() + '" AND rooms.Id = shedule.RoomId';
+    	sql = 'SELECT shedule.Id, NumberOfLesson, Teacher, Date, shedule.Name, rooms.Name as rName FROM `shedule`, `rooms` WHERE `Date` > "' + midnight.toISOString() + '" AND rooms.Id = shedule.RoomId ORDER BY `Date` ASC';
 	} else {
-        sql = 'SELECT shedule.Id, NumberOfLesson, Teacher, Date, shedule.Name, rooms.Name as rName FROM `shedule`, `rooms` WHERE `UserID` = "' + req.session.userId + '"AND `Date` > "' + midnight.toISOString() + '" AND rooms.Id = shedule.RoomId';
+        sql = 'SELECT shedule.Id, NumberOfLesson, Teacher, Date, shedule.Name, rooms.Name as rName FROM `shedule`, `rooms` WHERE `UserID` = "' + req.session.userId + '"AND `Date` > "' + midnight.toISOString() + '" AND rooms.Id = shedule.RoomId ORDER BY `Date` ASC';
     }
     con.query(sql, (error, result, fields) => {
         if(error) {
@@ -77,7 +77,7 @@ router.get('/', redirectLogin, function(req, res) {
         for(let i=0; i<result.length; i++){
             let objDate = new Date(result[i].Date);
             let data = {
-                date: result[i].Date,
+                date: result[i].Date.toLocaleDateString(),
                 lesson: result[i].NumberOfLesson,
                 name: result[i].Name,
                 room: result[i].rName,
@@ -90,13 +90,13 @@ router.get('/', redirectLogin, function(req, res) {
         }
         req.session.notifications = notificArray;
         req.session.allBooking = bookingsArray;
-        res.render('main', {data: req.session, notification: req.session.notifications});
+        res.render('main', {userName: req.session.userName, notification: req.session.notifications});
     });
 
 });
 
 router.get('/mybooking', redirectLogin, function(req, res) {
-	res.render('mybookings', {items: req.session.allBooking});
+	res.render('mybookings', {items: req.session.allBooking, userName: req.session.userName });
 });
 
 router.get('/mybooking/delete/:id', redirectLogin, function(req, res) {
@@ -117,8 +117,8 @@ router.get('/mybooking/edit/:id', redirectLogin, function(req, res) {
 			console.log('error', error);
 		}
 		if(result) {
-			console.log(result[0].Date);
-			console.log(new Date(result[0].Date));
+			// console.log(result[0].Date);
+			// console.log(new Date(result[0].Date));
 			let data = {
 				date: result[0].Date,
 				lesson: result[0].NumberOfLesson,
@@ -127,14 +127,14 @@ router.get('/mybooking/edit/:id', redirectLogin, function(req, res) {
 				teacher: result[0].Teacher,
 				id: req.params.id
 			};
-			res.render('editBooking', {booking: data});
+			res.render('editBooking', {booking: data, userName: req.session.userName});
 		}
 	});	
 	
 });
 
 router.post('/mybooking/editSend', redirectLogin, function(req, res){
-	console.log('date -- ', req.body.newdate);
+	// console.log('date -- ', req.body.newdate);
 	let data = {
 		date: req.body.newdate,
 		name: req.body.name,
@@ -185,7 +185,8 @@ router.post('/mybooking/editSend', redirectLogin, function(req, res){
 });
 
 router.get('/createPage', redirectLogin, function(req, res){
-	res.sendFile(path.join(__dirname, '../views' ,'/createBooking.html'));
+	// res.sendFile(path.join(__dirname, '../views' ,'/createBooking.ejs'));
+	res.render('createBooking', {userName: req.session.userName});
 });
 
 router.post('/createPage/create', redirectLogin, function(req, res){
@@ -203,13 +204,13 @@ router.post('/createPage/create', redirectLogin, function(req, res){
 	} else {
 		const checkRoom = 'SELECT * FROM `rooms` WHERE `Name` = "' + data.room + '"';
 		con.query(checkRoom, (error, result, fields) => {
-			console.log('res', result);
+			// console.log('res', result);
 			if(result.length < 1) {
                 res.render('error', {message: 'You entered invalid room name'});
 			} else {
 				console.log('mamma mia', result[0].Name);
 				const check = 'SELECT Date, rooms.Name, NumberOfLesson FROM `shedule`, `rooms` WHERE `Date` = "' + data.date + '" AND `NumberOfLesson` = "' + data.lesson + '" AND `RoomId` = (SELECT Id FROM `rooms` WHERE Name = "' + data.room + '")';
-				console.log(check);
+				// console.log(check);
 				con.query(check, (error, result, fields) => {
 					if(result.length < 1){
 						const sql = 'INSERT INTO `shedule` (`NumberOfLesson`, `Teacher`, `UserID`, `Date`, `Name`, `RoomId`) VALUES ("' + data.lesson + '", "' + data.teacher + '", "' + req.session.userId + '", "' + data.date + '", "' + data.name + '", (SELECT Id FROM `rooms` WHERE Name = "' + data.room + '"))';
@@ -267,7 +268,7 @@ router.get('/rooms', redirectLogin, function(req, res){
 			};
 			roomsArray.push(data);
 		}
-		res.render('rooms', {rooms: roomsArray});
+		res.render('rooms', {rooms: roomsArray, userName: req.session.userName});
 	});
 });
 
@@ -297,8 +298,7 @@ router.get('/rooms/shedule/:id/:date', redirectLogin, function(req, res){
 				};
 				sheduleArray.push(data);
 			}
-			console.log('shedule', sheduleArray);
-			res.render('shedule', {shedule: sheduleArray, days: req.params.date});
+			res.render('shedule', {shedule: sheduleArray, days: req.params.date, userName: req.session.userName});
 		}
 	});
 

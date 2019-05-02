@@ -4,47 +4,43 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="./../public/stylesheets/rooms.css" />
-
+	<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+	<link rel="stylesheet" type="text/css" href="/stylesheets/mybookings.css" />
+	<link rel="stylesheet" type="text/css" href="/stylesheets/rooms.css" />
 </head>
 <body>
-	<div class="container-fluid">
+<div class="container-fluid main">
+	<%- include('header', {userName: userName}); -%>
+	<div class="container">
 		<div class="rooms_title row">
-			<h2>Rooms information</h2>
+			<h2>Наявні кабінети</h2>
 		</div>
-		<div class="row">
-			<div class="rooms-container">
-				<% if (rooms) { %>
-					<% rooms.forEach(function(item) { %>
-						<div class="item">
-							<p>Name: <%= item.name %></p>
-							<p>Number of seats: <%= item.accom %></p>
-							<p>Number of Computers: <%= item.computers %></p>
-							<p>Has a projector: <% if(item.projector == 1) {%>
-									yes
+		<div class="row rooms-container">
+			<% if (rooms) { %>
+				<% rooms.forEach(function(item) { %>
+					<div class="item col-sm-4 col-xs-12">
+						<div class="background">
+							<p><span>Назва: </span><%= item.name %></p>
+							<p><span>К-ть місць: </span><%= item.accom %></p>
+							<p><span>К-ть комп'ютерів: </span><%= item.computers %></p>
+							<p><span>Наявність проектора: </span><% if(item.projector == 1) {%>
+									так
 								<% } else { %>
-									no
+									ні
 								<% }%></p>
 							<div class="shedule_links">
-								<a href='/main/rooms/shedule/<%= item.id %>/today'>Shedule for today</a>
-								<a href='/main/rooms/shedule/<%= item.id %>/tomorrow'>Shedule for tomorrow</a>
-								<a href='/main/rooms/shedule/<%= item.id %>/week'>Shedule for week</a>
+								<a href='/main/rooms/shedule/<%= item.id %>/today'>Розклад на сьогодні</a>
+								<a href='/main/rooms/shedule/<%= item.id %>/tomorrow'>Розклад на завтра</a>
+								<a href='/main/rooms/shedule/<%= item.id %>/week'>Розклад на тиждень</a>
 							</div>
 						</div>
-	   				<% }); %>
-   				<% } else { %>
-						<div> This room will be available for <%= days %> </div>
-				<% } %>
-			</div>
-			<a class="go_back">Back</a>
+					</div>
+				<% }); %>
+			<% } %>
 		</div>
 	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<script>
-        $('.go_back').on('click', function(){
-            window.history.back();
-        });
-	</script>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </body>
 </html>

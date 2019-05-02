@@ -1,17 +1,12 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
 #login{
-	background-color: #ADC0EA;
+	font-family: Roboto Slab;
+	background-image: linear-gradient(to left bottom, #fcffe1, #bbddc2, #79bab2, #4094a7, #2a6b96);
 }
 
 .first-page{
-/*	display: -webkit-flex;
-	display: -moz-flex;
-	display: -ms-flex;
-	display: -o-flex;
-	display: flex;
-	justify-content: center;
-	-ms-align-items: center;
-	align-items: center;
-	height: 100%*/
+	min-height: 300px;
 }
 body, html {
   	height: 100%;
@@ -21,20 +16,53 @@ body, html {
   	margin: auto;
 	text-align: center;
 }
+.first-page ul{
+	margin-bottom: 20px;
+}
 .first-page li{
 	float: none;
 	display: inline-block;
+	text-transform: uppercase;
 }
 .first-page li a{
-	background-color: #794BB0 !important;
-	color: #FFF1D5 !important;
+	background-color: transparent !important;
+	color: #06558a !important;
 	border-radius: 0;
+	font-size: 18px;
 }
 li.active a{
-
+	border-bottom: 2px solid #06558a;
 }
 .first-page li:hover a, li.active:hover a{
 	border-radius: 0;
-	transform: scale(1.1, 1.1);
+	/*transform: scale(1.1, 1.1);*/
 }
-
+.first-page form{
+	margin: 0 auto;
+	font-size: 17px;
+}
+.first-page form > * {
+	width: 310px;
+	display: block;
+	margin: 20px auto;
+}
+.first-page form input{
+	height: 45px;
+	padding: 0 5px;
+	border: 2px #06558a solid;
+	background-color: transparent;
+}
+.first-page form button{
+	padding: 15px 30px 12px;
+	background-color: inherit;
+	border: 2px solid #06558a;
+	text-transform: uppercase;
+	color: #06558a;
+	letter-spacing: 1.3px;
+}
+.first-page form button:hover{
+	color: #fff;
+	background-color: #06558a;
+	transform: scale(1.05);
+	transition: all 0.3s;
+}

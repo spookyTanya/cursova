@@ -1,0 +1,58 @@
+.container{
+    display: grid;
+    min-height: 100vh;
+    padding-top: 90px;
+}
+
+.item{
+    width: 420px;
+    margin: 0 auto;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+input{
+    margin-bottom: 12px;
+}
+
+form input{
+    height: 45px;
+    padding: 0 5px;
+    border: 2px #06558a solid;
+    background-color: transparent;
+}
+form button{
+    padding: 15px 30px 12px;
+    background-color: inherit;
+    border: 2px solid #06558a;
+    text-transform: uppercase;
+    color: #06558a;
+    letter-spacing: 1.3px;
+    margin-bottom: 15px;
+}
+form button:hover{
+    color: #fff;
+    background-color: #06558a;
+    transform: scale(1.05);
+    transition: all 0.3s;
+}
+
+input[type="date"]::-webkit-inner-spin-button {
+    display: none;
+}
+
+/* Always display the drop down caret */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: #2c3e50;
+}
+
+/* A few custom styles for date inputs */
+input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    display: inline-block !important;
+    visibility: visible !important;
+}

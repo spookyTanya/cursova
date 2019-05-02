@@ -1,53 +1,94 @@
 * {
-  box-sizing: border-box; }
-
+  box-sizing: border-box;
+}
 .mybookings_title {
   height: 50px;
   font-size: 30px;
-  background-color: #007BCD;
   padding: 0 20px;
-  vertical-align: center;
-  box-shadow: 0 0 10px 1px #3F4756; }
-  .mybookings_title > h2 {
-    font-size: 30px;
-    margin: 0; }
-
+  margin-top: 100px;
+  margin-left: 20px;
+}
+.mybookings_title > h2 {
+  font-size: 30px;
+  margin: 0;
+}
+.main-navigation li:first-of-type a:after{
+  content: '';
+  display: block;
+  width: auto;
+  height: 2px;
+  margin-top: 5px;
+  background-color: #06558a;
+}
 .items_container {
   overflow-y: auto;
-  height: calc(100vh - 50px);
   padding: 20px;
   margin: 0 auto;
   min-width: 300px;
-  background-color: #2a6b96; }
-
+}
 .item {
-  border-radius: 10px;
-  background-color: #E6F4F1;
   color: #3F4756;
-  padding: 15px;
-  margin: 20px; }
-  .item .edit-delete_links {
-    display: flex;
-    flex-direction: row; }
-  .item p {
-    font-size: 18px;
-    margin: 0; }
-  .item a {
-    text-decoration: none;
-    margin: 0 5px;
-    padding: 5px 15px;
-    border-radius: 5px;
-    font-size: 18px;
-    font-weight: 700;
-    width: 80px; }
-    .item a::after {
-      content: '';
-      display: block;
-      width: 0;
-      height: 2px;
-      transition: width .4s;
-      background-color: #007BCD; }
-    .item a:hover::after {
-      width: 100%; }
+  margin-bottom: 15px;
+}
+.item > div{
+  background-color: #e5fbf6;
+  padding: 10px 15px;
+}
+.item .edit-delete_links {
+  display: flex;
+  flex-direction: row;
+}
+.item span{
+  font-size: 20px;
+  font-weight: 700;
+}
+.item p {
+  font-size: 18px;
+}
+.item a {
+  text-decoration: none;
+  padding: 5px 15px;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #06558a;
+}
+.item a::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  transition: width .4s;
+  background-color: #06558a;
+}
+.item a:hover::after {
+  width: 100%;
+}
 
-/*# sourceMappingURL=mybookings.css.map */
+.empty{
+  margin: 0 auto;
+  max-width: 360px;
+  margin-top: 210px;
+  text-align: center;
+}
+.empty p{
+  font-size: 18px;
+}
+.items_container .empty a, .rooms-container button{
+  padding: 15px 30px 12px;
+  background-color: inherit;
+  border: 2px solid #06558a;
+  text-transform: uppercase;
+  color: #06558a;
+  letter-spacing: 1.3px;
+  margin-bottom: 15px;
+  text-decoration: none;
+  margin-top: 15px;
+  display: inline-block;
+}
+.items_container .empty a:hover, .rooms-container button:hover{
+  color: #fff;
+  background-color: #06558a;
+  transform: scale(1.05);
+  transition: all 0.3s;
+}

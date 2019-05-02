@@ -1,25 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="stylesheets/main.css" />
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/mybookings.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/schedule.css" />
 </head>
 <body>
-    <% if (shedule.length > 0) { %>
-        <% shedule.forEach(function(item) { %>
-            <div class="item">
-                Date: <%= item.date %>
-                lesson: <%= item.lesson %>
-                Name: <%= item.name %>
-                teacher: <%= item.teacher %>
-            </div>
-        <% }); %>
-    <% } else { %>
-        <p class="message">Room has no bookings, <a href="/main/createPage">create one?</a></p>
-    <% } %>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<div class="container-fluid main">
+    <%- include('header', {userName: userName}); -%>
+    <div class="container">
+        <div class="rooms_title row">
+            <h2>Розклад для аудиторії</h2>
+        </div>
+        <div class="row rooms-container">
+            <% if (shedule.length > 0) { %>
+                <% shedule.forEach(function(item) { %>
+                    <div class="item col-sm-4 col-xs-12">
+                        <div class="background">
+                            <p><span>Назва: </span><%= item.name %></p>
+                            <p><span>Дата: </span><%= item.date %></p>
+                            <p><span>Викладач: </span><%= item.teacher %></p>
+                            <p><span>№ пари: </span><%= item.lesson %></p>
+                        </div>
+                    </div>
+                <% }); %>
+                <button class="go_back">Назад</button>
+            <% } else { %>
+                <div class="empty">
+                    <p class="message">Для цієї аудиторії немає бронювання </p>
+                    <a href="/main/createPage">Створити бронювання</a>
+                    <button class="go_back">Назад</button>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+    $('.go_back').on('click', function(){
+        window.history.back();
+    });
+</script>
 </body>
 </html>
