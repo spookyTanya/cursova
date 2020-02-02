@@ -28,7 +28,7 @@
 }
 .item {
   color: #3F4756;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 .item > div{
   background-color: #e5fbf6;
@@ -49,7 +49,7 @@
   text-decoration: none;
   padding: 5px 15px;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   color: #06558a;
 }
@@ -74,7 +74,7 @@
 .empty p{
   font-size: 18px;
 }
-.items_container .empty a, .rooms-container button{
+.items_container .empty a, .container button{
   padding: 15px 30px 12px;
   background-color: inherit;
   border: 2px solid #06558a;
@@ -86,7 +86,7 @@
   margin-top: 15px;
   display: inline-block;
 }
-.items_container .empty a:hover, .rooms-container button:hover{
+.items_container .empty a:hover, .container button:hover{
   color: #fff;
   background-color: #06558a;
   transform: scale(1.05);

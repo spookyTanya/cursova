@@ -14,7 +14,7 @@ const $ = jQuery = require('jquery')(window);
 const redirectMain = (req, res, next) => {
 	console.log('to login', req.session);
 	if(req.session.userName) {
-		res.redirect('/main');
+		res.redirect('/main/mybooking');
 	} else{
 		next();
 	}
@@ -34,17 +34,18 @@ router.post('/signin', redirectMain,  function(req, res) {
 		password:  req.body.password,
 	};
 
-	const sql = 'SELECT `Id`, `Name`, `Surname` FROM `users` WHERE `Email` = "' + data.email + '" AND `Password` = "' + data.password + '"';
+	const sql = 'SELECT `Id`, `Name`, `Surname`, `IsSuperuser` FROM `users` WHERE `Email` = "' + data.email + '" AND `Password` = "' + data.password + '"';
 	console.log('sql', sql);
 	con.query(sql, (error, result, fields) => {
 		if(error) {
 			console.log('error', error);
 		}
-		console.log('result', result);
+		console.log('resuuuuuuuuult', result);
 		if(result.length > 0) {
             req.session.userName = result[0].Name + ' ' + result[0].Surname;
             req.session.userId = result[0].Id;
             req.session.email = req.body.email;
+            req.session.superuser = result[0].IsSuperuser;
             res.redirect('/main');
         } else {
 			res.render('error', {message: 'User does not exist'});

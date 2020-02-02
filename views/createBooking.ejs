@@ -17,11 +17,16 @@
         <div class="item">
             <h2>Забронювати аудиторію</h2>
             <form class="createBookingForm" action="/main/createPage/create" method="post">
-                Назва: <input type="text" name="name">
-                Дата: <input type="date" name="date">
-                Аудиторія: <input type="text" name="room">
-                № пари: <input type="text" name="lesson">
-                Викладач: <input type="text" name="teacher">
+                Назва: <input type="text" name="name" autocomplete="fal">
+                Дата: <input type="date" name="date" autocomplete="fal">
+                <!--Аудиторія: <input type="text" name="room" autocomplete="fal">-->
+                <select name="room" id="">
+                    <% rooms.forEach(function(item) { %>
+                        <option value="<%= item.name %>"><%= item.name %></option>
+                    <% }); %>
+                </select>
+                № пари: <input type="text" name="lesson" autocomplete="fal">
+                Викладач: <input type="text" name="teacher" autocomplete="fal">
                 <button type="submit">Створити</button>
                 <button class="go_back">Назад</button>
             </form>
@@ -35,6 +40,7 @@
     $('.go_back').on('click', function(){
         window.history.back();
     });
+
 </script>
 </body>
 </html>

@@ -22,7 +22,7 @@
                     <div class="item col-sm-4 col-xs-12">
                         <div class="background">
                             <p><span>Назва: </span> <%= item.name %></p>
-                            <p><span>Дата: </span><%= item.date %></p>
+                            <p><span>Дата: </span><%= item.date.split('-').reverse().join('.') %></p>
                             <p><span>Аудиторія: </span><%= item.room %></p>
                             <p><span>№ пари: </span><%= item.lesson %></p>
                             <div class="edit-delete_links">
