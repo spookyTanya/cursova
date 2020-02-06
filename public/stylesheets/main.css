@@ -79,7 +79,12 @@
     font-size: 30px;
     padding: 0 0 10px 20px;
 }
-
+.notifications-list {
+    display: grid;
+    grid-template-columns: repeat(7, 14%);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+}
 .item_notification {
     height: auto;
     color: #3F4756;
@@ -92,10 +97,10 @@
 }
 
 .item_notification p {
-    font-size: 18px;
+    font-size: 13px;
 }
 .item_notification span {
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 700;
 }
 

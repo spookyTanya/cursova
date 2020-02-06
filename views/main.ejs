@@ -1,41 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="./stylesheets/main.css" />
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./stylesheets/main.css"/>
 </head>
 <body>
 <div class="container-fluid main">
-	<%- include('header', {userName: userName}); -%>
-	<div class="main-content row">
-		<div class="notifications">
-			<% if (notification.length > 0) { %>
-				<div class="container">
-					<h2 class="notifications-title">Бронювання цього тижня:</h2>
-					<div class="row notifications-list">
-						<% notification.forEach(function(item) { %>
-							<div class="col-sm-4 col-xs-12 item_notification">
-								<div class="background">
-									<p><span>Назва:</span> <%= item.name %> </p>
-									<p><span>Дата:</span> <%= item.date.split('-').reverse().join('.') %> </p>
-									<p><span>Аудиторія:</span> <%= item.room %> </p>
-									<p><span>№ пари:</span> <%= item.lesson %> </p>
-								</div>
-							</div>
-						<% });%>
-					</div>
-				</div>
-			<% } else{%>
-				<div class="empty-list">
-					You have not made any booking yet. <a href="/main/createPage">Create one?</a>
-				</div>
-			<% } %>
-		</div>
-	</div>
+    <%- include('header', {userName: userName}); -%>
+    <div class="main-content row">
+        <div class="notifications">
+            <div class="container">
+                <h2 class="notifications-title">Бронювання цього тижня:</h2>
+                <div class="notifications-list">
+                    <!--<div class="day-title">ПН</div>-->
+                    <!--<div class="day-title">ВТ</div>-->
+                    <!--<div class="day-title">СР</div>-->
+                    <!--<div class="day-title">ЧТ</div>-->
+                    <!--<div class="day-title">ПТ</div>-->
+                    <!--<div class="day-title">СБ</div>-->
+                    <!--<div class="day-title">НД</div>-->
+                    <% for(let i = 0; i < 7; i++) { %>
+                        <div class="notification-row">
+                            <div class="day-title"><%= days[i] + ' ' + weekDate[i] %></div>
+                            <% notification[i].forEach(function(item) { %>
+                                <div class="item_notification">
+                                    <div class="background">
+                                        <p><span>Назва:</span> <%= item.name %> </p>
+                                        <p><span>Дата:</span> <%= item.date.split('-').reverse().join('.') %> </p>
+                                        <p><span>Аудиторія:</span> <%= item.room %> </p>
+                                        <p><span>№ пари:</span> <%= item.lesson %> </p>
+                                    </div>
+                                </div>
+                            <% }); %>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
 </body>
 </html>

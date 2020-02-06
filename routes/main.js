@@ -61,25 +61,33 @@ const redirectLogin = async (req, res, next) => {
 };
 
 router.get('/', redirectLogin, function (req, res) {
-    let today = new Date();
-    const midnight = new Date();
+    let today = getMonday(new Date());
+    const midnight = today;
     midnight.setHours(0);
     midnight.setMinutes(0);
+
     let sql;
 
     if (req.session.superuser === 1) {
-        sql = 'SELECT shedule.Id, NumberOfLesson, Teacher, Date, shedule.Name, rooms.Name as rName FROM `shedule`, `rooms` WHERE `Date` > "' + midnight.toISOString() + '" AND rooms.Id = shedule.RoomId ORDER BY `Date` ASC';
+        sql = 'SELECT shedule.Id, NumberOfLesson, Teacher, Date, shedule.Name, rooms.Name as rName FROM `shedule`, `rooms` WHERE `Date` > "' + midnight.toLocaleDateString() + '" AND rooms.Id = shedule.RoomId ORDER BY `Date` ASC';
     } else {
-        sql = 'SELECT shedule.Id, NumberOfLesson, Teacher, Date, shedule.Name, rooms.Name as rName FROM `shedule`, `rooms` WHERE `UserID` = "' + req.session.userId + '"AND `Date` > "' + midnight.toISOString() + '" AND rooms.Id = shedule.RoomId ORDER BY `Date` ASC';
+        sql = 'SELECT shedule.Id, NumberOfLesson, Teacher, Date, shedule.Name, rooms.Name as rName FROM `shedule`, `rooms` WHERE `UserID` = "' + req.session.userId + '"AND `Date` > "' + midnight.toLocaleDateString() + '" AND rooms.Id = shedule.RoomId ORDER BY `Date` ASC';
     }
+
+    console.log(sql);
     con.query(sql, (error, result, fields) => {
         if (error) {
             console.log('error', error);
         }
-        let notificArray = [];
+        let notificObj = {0: [], 1: [], 2: [], 3: [], 4:[], 5:[], 6:[], 7:[]};
+        // let notificObj = {1: [], 2: [], 3: [], 4:[], 5:[], 6:[], 7: []};
+        let days = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'НД'];
+        let weekDate = [];
         let bookingsArray = [];
         for (let i = 0; i < result.length; i++) {
             let objDate = new Date(result[i].Date);
+            // objDate.setHours(objDate.getHours() + 2);
+
             let data = {
                 date: result[i].Date.toLocaleDateString(),
                 lesson: result[i].NumberOfLesson,
@@ -88,13 +96,25 @@ router.get('/', redirectLogin, function (req, res) {
                 id: result[i].Id,
             };
             if (objDate - today < 604800000) {
-                notificArray.push(data);
+                console.log('aaaaaaaa', objDate, objDate.getDay(), (objDate.getDay() - 1 + 7) % 7)
+                notificObj[(objDate.getDay() - 1 + 7) % 7].push(data);
+                // notificObj[objDate.getDay()].push(data);
             }
             bookingsArray.push(data);
         }
-        req.session.notifications = notificArray;
+
+        for (let i = 0; i < 7; i++) {
+            let today = getMonday(new Date());
+            let d = new Date(today.setDate(today.getDate() + i));
+            weekDate.push(d.getDate() + '.' + d.getMonth() + 1);
+            notificObj[i].sort(function (a, b) {
+                return a.lesson - b.lesson;
+            });
+        }
+
+        req.session.notifications = notificObj;
         req.session.allBooking = bookingsArray;
-        res.render('main', {userName: req.session.userName, notification: req.session.notifications});
+        res.render('main', {userName: req.session.userName, notification: req.session.notifications, days: days, weekDate: weekDate});
     });
 
 });
@@ -339,5 +359,13 @@ router.get('/logout', function (req, res) {
     req.session.email = '';
     res.redirect('/')
 });
+
+function getMonday(d) {
+    d = new Date(d);
+    let day = d.getDay();
+    let diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+
+    return new Date(d.setDate(diff));
+}
 
 module.exports = router;
