@@ -90,6 +90,8 @@
     color: #3F4756;
     transition: 0.2s;
     margin-bottom: 15px;
+    min-height: 180px;
+    width: 100%;
 }
 .item_notification div{
     background-color: #e5fbf6;

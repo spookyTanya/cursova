@@ -68,10 +68,12 @@ router.get('/', redirectLogin, function (req, res) {
 
     let sql;
 
+    console.log(midnight);
+
     if (req.session.superuser === 1) {
-        sql = 'SELECT shedule.Id, NumberOfLesson, Teacher, Date, shedule.Name, rooms.Name as rName FROM `shedule`, `rooms` WHERE `Date` > "' + midnight.toLocaleDateString() + '" AND rooms.Id = shedule.RoomId ORDER BY `Date` ASC';
+        sql = 'SELECT shedule.Id, NumberOfLesson, Teacher, Date, shedule.Name, rooms.Name as rName FROM `shedule`, `rooms` WHERE `Date` > "' + midnight.toISOString() + '" AND rooms.Id = shedule.RoomId ORDER BY `Date` ASC';
     } else {
-        sql = 'SELECT shedule.Id, NumberOfLesson, Teacher, Date, shedule.Name, rooms.Name as rName FROM `shedule`, `rooms` WHERE `UserID` = "' + req.session.userId + '"AND `Date` > "' + midnight.toLocaleDateString() + '" AND rooms.Id = shedule.RoomId ORDER BY `Date` ASC';
+        sql = 'SELECT shedule.Id, NumberOfLesson, Teacher, Date, shedule.Name, rooms.Name as rName FROM `shedule`, `rooms` WHERE `UserID` = "' + req.session.userId + '"AND `Date` > "' + midnight.toISOString() + '" AND rooms.Id = shedule.RoomId ORDER BY `Date` ASC';
     }
 
     console.log(sql);
@@ -89,14 +91,14 @@ router.get('/', redirectLogin, function (req, res) {
             // objDate.setHours(objDate.getHours() + 2);
 
             let data = {
-                date: result[i].Date.toLocaleDateString(),
+                date: result[i].Date,
                 lesson: result[i].NumberOfLesson,
                 name: result[i].Name,
                 room: result[i].rName,
                 id: result[i].Id,
             };
             if (objDate - today < 604800000) {
-                console.log('aaaaaaaa', objDate, objDate.getDay(), (objDate.getDay() - 1 + 7) % 7)
+                console.log('aaaaaaaa', objDate, objDate.getDay(), (objDate.getDay() - 1 + 7) % 7);
                 notificObj[(objDate.getDay() - 1 + 7) % 7].push(data);
                 // notificObj[objDate.getDay()].push(data);
             }
