@@ -26,10 +26,12 @@
                         <div class="notification-row">
                             <div class="day-title"><%= days[i] + ' ' + weekDate[i] %></div>
                             <% notification[i].forEach(function(item) { %>
+                                <% var date = item.date.toISOString() %>
+                                <% date = date.slice(0, date.indexOf('T')) %>
                                 <div class="item_notification">
                                     <div class="background">
-                                        <p><span>Назва:</span> <%= item.name %> </p>
-                                        <p><span>Дата:</span> <%= item.date.split('-').reverse().join('.') %> </p>
+                                        <p><span>Назва:</span> <%= item.name + date %> </p>
+                                        <p><span>Дата:</span> <%= date.split('-').reverse().join('.') %> </p>
                                         <p><span>Аудиторія:</span> <%= item.room %> </p>
                                         <p><span>№ пари:</span> <%= item.lesson %> </p>
                                     </div>

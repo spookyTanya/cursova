@@ -116,6 +116,7 @@ router.get('/', redirectLogin, function (req, res) {
 
         req.session.notifications = notificObj;
         req.session.allBooking = bookingsArray;
+
         res.render('main', {userName: req.session.userName, notification: req.session.notifications, days: days, weekDate: weekDate});
     });
 
@@ -339,13 +340,15 @@ router.get('/rooms/shedule/:id/:date', redirectLogin, function (req, res) {
     console.log(sql);
     con.query(sql, (err, result, fields) => {
         if (result) {
+            console.log(result);
             let sheduleArray = [];
             for (let i = 0; i < result.length; i++) {
+                console.log('item', result[i])
                 let data = {
-                    date: result[0].Date,
-                    lesson: result[0].NumberOfLesson,
-                    name: result[0].Name,
-                    teacher: result[0].Teacher
+                    date: result[i].Date.toISOString(),
+                    lesson: result[i].NumberOfLesson,
+                    name: result[i].Name,
+                    teacher: result[i].Teacher
                 };
                 sheduleArray.push(data);
             }

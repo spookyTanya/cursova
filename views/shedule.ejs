@@ -17,19 +17,20 @@
             <h2>Розклад для аудиторії</h2>
         </div>
         <% if (shedule.length > 0) { %>
-            <% shedule.forEach(function(item) { %>
-                <div class="row rooms-container">
-                    <div class="item col-sm-4 col-xs-12">
-                        <div class="background">
-                            <p><span>Назва: </span><%= item.name %></p>
-                            <p><span>Дата: </span><%= item.date.toLocaleDateString() %></p>
-                            <p><span>Викладач: </span><%= item.teacher %></p>
-                            <p><span>№ пари: </span><%= item.lesson %></p>
+            <div class="row rooms-container">
+                <% shedule.forEach(function(item) { %>
+                    <% var date = item.date %>
+                    <% date = date.slice(0, date.indexOf('T')) %>
+                        <div class="item col-sm-4 col-xs-12">
+                            <div class="background">
+                                <p><span>Назва: </span><%= item.name %></p>
+                                <p><span>Дата: </span><%= date.split('-').reverse().join('.') %></p>
+                                <p><span>Викладач: </span><%= item.teacher %></p>
+                                <p><span>№ пари: </span><%= item.lesson %></p>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-            <% }); %>
+                <% }); %>
+            </div>
             <button class="go_back">Назад</button>
         <% } else { %>
             <div class="empty">
