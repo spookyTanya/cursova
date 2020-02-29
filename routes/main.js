@@ -298,6 +298,45 @@ router.post('/createPage/create', redirectLogin, function (req, res) {
     }
 });
 
+router.get('/findRoom', redirectLogin, function (req, res) {
+    res.render('findRoom', {userName: req.session.userName});
+});
+
+router.post('/findRoom/find', redirectLogin, function (req, res) {
+    let sql = 'SELECT * FROM `rooms` WHERE ';
+
+    for (let [key, value] of Object.entries(req.body)) {
+        if (key !== 'HasProjector' && value !== '') {
+            sql += key + ' >= ' + value + ' AND ';
+        }
+        if (key === 'HasProjector' && value === 'on') {
+            sql += key  + ' = 1 ';
+        }
+    }
+
+    con.query(sql, (error, result, fields) => {
+        if (error) {
+            console.log('error', error);
+        }
+
+        let roomsArray = [];
+
+        for (let i = 0; i < result.length; i++) {
+            let data = {
+                id: result[i].Id,
+                name: result[i].Name,
+                accom: result[i].Accommodation,
+                computers: result[i].NumberOfComputers,
+                projector: result[i].HasProjector
+            };
+
+            roomsArray.push(data);
+        }
+
+        res.render('rooms', {rooms: roomsArray, userName: req.session.userName});
+    });
+});
+
 router.get('/rooms', redirectLogin, function (req, res) {
     const sql = 'SELECT * FROM `rooms`';
 
