@@ -1,4 +1,4 @@
-<div class="header row">
+<!--<div class="header row">
     <div class="navigtion-wraper">
         <ul class="main-navigation ">
             <li><a href="/main/mybooking">Мої бронювання</a></li>
@@ -9,4 +9,26 @@
             <li class="user">Вітаю, <%= userName %> </li>
         </ul>
     </div>
-</div>
+</div>-->
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navigtion-wraper navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav main-navigation">
+                <li><a href="/main/mybooking">Мої бронювання</a></li>
+                <li><a href="/main/createPage">Забронювати аудиторію</a></li>
+                <li><a href="/main/rooms">Аудиторії</a></li>
+                <li><a href="/main/findRoom">Знайти аудиторію</a></li>
+                <li><a href="/main/logout">Вийти</a></li>
+                <li class="user">Вітаю, <%= userName %> </li>
+            </ul>
+        </div>
+    </div>
+</nav>

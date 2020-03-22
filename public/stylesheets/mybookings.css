@@ -68,7 +68,7 @@
 .empty{
   margin: 0 auto;
   max-width: 360px;
-  margin-top: 210px;
+  margin-top: 20vh;
   text-align: center;
 }
 .empty p{

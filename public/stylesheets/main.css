@@ -8,6 +8,15 @@
     background-image: linear-gradient(to left bottom, #fcffe1, #bbddc2, #79bab2, #4094a7, #2a6b96);
 }
 
+.navbar{
+    margin: 0 -15px;
+    color: #000;
+    background-color: #E6F4F1;
+    box-shadow: 0 0 10px 1px #3F4756;
+    border: none;
+    border-radius: 0;
+}
+
 .header {
     width: 100%;
     position: fixed;
@@ -19,8 +28,6 @@
 
 .navigtion-wraper {
     width: 100%;
-    background-color: #E6F4F1;
-    box-shadow: 0 0 10px 1px #3F4756;
 }
 
 .main-navigation {
@@ -29,6 +36,26 @@
     justify-content: space-around;
     margin-bottom: 0;
     list-style: none;
+    width: 100%;
+}
+
+.navbar-inverse .navbar-toggle{
+    border-color: #3F4756;
+}
+.navbar-inverse .navbar-toggle:hover{
+    background-color: #06558a;
+}
+
+.navbar-inverse .navbar-toggle:hover .icon-bar{
+    background-color: #fff;
+}
+
+.navbar-inverse .navbar-toggle .icon-bar{
+    background-color: #3F4756;
+}
+
+.navbar-inverse .navbar-collapse{
+    border: none
 }
 
 .main-navigation li {
@@ -47,7 +74,7 @@
 }
 .main-navigation li a {
     text-decoration: none;
-    color: #3F4756;
+    color: #3F4756 !important;
     padding: 10px 0;
     display: block;
 }
@@ -66,7 +93,6 @@
 
 .main-content {
     min-height: 100vh;
-    padding-top: 82px;
 }
 
 .notifications {
@@ -81,7 +107,7 @@
 }
 .notifications-list {
     display: grid;
-    grid-template-columns: repeat(7, 14%);
+    grid-template-columns: repeat(7, 13%);
     grid-column-gap: 10px;
     grid-row-gap: 10px;
 }
@@ -110,10 +136,35 @@
     font-size: 20px;
 }
 
-@media screen and (max-width: 600px) {
+@media (max-width: 810px) {
+    .notifications-list{
+        grid-template-columns: repeat(3, 33%);
+    }
+}
+
+@media (max-width: 768px) {
     .main-navigation {
-        flex-direction: column;
-        justify-content: center; }
+        display: block;
+    }
+    .main-navigation li {
+        font-size: 15PX;
+        margin: 0 auto;
+        max-width: none;
+    }
+    .main-navigation li:last-of-type {
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    
+
+}
+
+@media (max-width: 510px) {
+    .main-navigation a{
+        font-size: 15px;
+    }
 }
 @media screen and (min-width: 1024px) {
     .main-navigation {

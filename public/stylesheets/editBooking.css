@@ -1,12 +1,16 @@
 .container{
-    display: grid;
+    /*display: grid;*/
     min-height: 100vh;
     padding-top: 90px;
 }
 
 .item{
-    width: 420px;
+    max-width: 420px;
     margin: 0 auto;
+}
+
+.item h2{
+    word-break: break-word;
 }
 
 form{
