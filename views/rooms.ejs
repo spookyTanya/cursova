@@ -21,7 +21,8 @@
 				<% rooms.forEach(function(item) { %>
 					<div class="item col-sm-4 col-xs-12">
 						<div class="background">
-							<p><span>Назва: </span><%= item.name %></p>
+							<p><span>Аудиторія: </span><%= item.name %></p>
+							<p><span>Кафедра: </span><%= item.depName %></p>
 							<p><span>К-ть місць: </span><%= item.accom %></p>
 							<p><span>К-ть комп'ютерів: </span><%= item.computers %></p>
 							<p><span>Наявність проектора: </span><% if(item.projector == 1) {%>
@@ -29,6 +30,7 @@
 								<% } else { %>
 									ні
 								<% }%></p>
+							<p><span>Адреса: </span><%= item.buildingName + ', вул. ' + item.street + ' ' + item.house %></p>
 							<div class="shedule_links">
 								<a href='/main/rooms/shedule/<%= item.id %>/today'>Розклад на сьогодні</a>
 								<a href='/main/rooms/shedule/<%= item.id %>/tomorrow'>Розклад на завтра</a>

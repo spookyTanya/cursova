@@ -7,11 +7,18 @@ var con = mysql.createPool({
   database: "heroku_656924a3d6f9fc3"
 });
 
-/*con.connect(function(err) {
-  console.log("Connected!");
-});*/
+/*var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "cursova"
+});
 
-/*setInterval(function () {
+con.connect(function(err) {
+  console.log("Connected!");
+});
+
+setInterval(function () {
     con.query('SELECT 1 from users');
 }, 5000);*/
 

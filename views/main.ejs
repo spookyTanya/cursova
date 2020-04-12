@@ -13,16 +13,9 @@
     <%- include('header', {userName: userName}); -%>
     <div class="main-content row">
         <div class="notifications">
-            <div class="container">
+            <div class="container-fluid notifications-container">
                 <h2 class="notifications-title">Бронювання цього тижня:</h2>
                 <div class="notifications-list">
-                    <!--<div class="day-title">ПН</div>-->
-                    <!--<div class="day-title">ВТ</div>-->
-                    <!--<div class="day-title">СР</div>-->
-                    <!--<div class="day-title">ЧТ</div>-->
-                    <!--<div class="day-title">ПТ</div>-->
-                    <!--<div class="day-title">СБ</div>-->
-                    <!--<div class="day-title">НД</div>-->
                     <% for(let i = 0; i < 7; i++) { %>
                         <div class="notification-row">
                             <div class="day-title"><%= days[i] + ' ' + weekDate[i] %></div>
@@ -33,8 +26,10 @@
                                     <div class="background">
                                         <p><span>Назва:</span> <%= item.name %> </p>
                                         <p><span>Дата:</span> <%= date.split('-').reverse().join('.') %> </p>
-                                        <p><span>Аудиторія:</span> <%= item.room %> </p>
                                         <p><span>№ пари:</span> <%= item.lesson %> </p>
+                                        <p><span>Аудиторія:</span> <%= item.room %> </p>
+                                        <p><span>Кафедра:</span> <%= item.depName %> </p>
+                                        <p><span>Адреса:</span> <%= item.buildingName + ', вул. ' + item.street + ' ' + item.house %> </p>
                                     </div>
                                 </div>
                             <% }); %>

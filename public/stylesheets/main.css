@@ -93,6 +93,7 @@
 
 .main-content {
     min-height: 100vh;
+    margin-top: 100px;
 }
 
 .notifications {
@@ -104,12 +105,23 @@
     color: #2D3543;
     font-size: 30px;
     padding: 0 0 10px 20px;
+    text-align: left;
 }
 .notifications-list {
     display: grid;
     grid-template-columns: repeat(7, 13%);
     grid-column-gap: 10px;
     grid-row-gap: 10px;
+}
+.notification-row{
+    text-align: left;
+}
+.day-title{
+    margin-bottom: 10px;
+}
+.notifications-container{
+    padding: 0 30px;
+    text-align: center;
 }
 .item_notification {
     height: auto;
@@ -126,6 +138,7 @@
 
 .item_notification p {
     font-size: 13px;
+    margin-bottom: 5px;
 }
 .item_notification span {
     font-size: 14px;
@@ -168,7 +181,8 @@
 }
 @media screen and (min-width: 1024px) {
     .main-navigation {
-        max-width: 1024px;
-        margin: 0 auto; }
+        /*max-width: 1024px;*/
+        margin: 0 auto;
+    }
 }
 

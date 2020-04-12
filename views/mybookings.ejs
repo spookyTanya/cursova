@@ -25,8 +25,10 @@
                         <div class="background">
                             <p><span>Назва: </span> <%= item.name %></p>
                             <p><span>Дата: </span><%= date.split('-').reverse().join('.') %></p>
-                            <p><span>Аудиторія: </span><%= item.room %></p>
                             <p><span>№ пари: </span><%= item.lesson %></p>
+                            <p><span>Аудиторія: </span><%= item.room %></p>
+                            <p><span>Кафедра:</span> <%= item.depName %> </p>
+                            <p><span>Адреса:</span> <%= item.buildingName + ', вул. ' + item.street + ' ' + item.house %> </p>
                             <div class="edit-delete_links">
                                 <a href='/main/mybooking/edit/<%= item.id %>'>Редагувати</a>
                                 <a href='/main/mybooking/delete/<%= item.id %>'>Видалити</a>
@@ -38,17 +40,15 @@
                 <div class="empty">
                     <p class="message">Ви не створили жодного бронювання</p>
                     <a href="/main/createPage">Створити бронювання</a>
-                    <button class="go_back">Назад</button>
+                    <button id="go_back">Назад</button>
                 </div>
             <% } %>
         </div>
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
-    $('.go_back').on('click', function(){
+    document.getElementById('go_back').addEventListener('click', function () {
         window.history.back();
     });
 </script>

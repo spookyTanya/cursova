@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/createBooking.css" />
-    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
-    <link rel="stylesheet" type="text/css" href="/stylesheets/editBooking.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/createBooking.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/editBooking.css"/>
 </head>
 <body>
 <div class="container-fluid main">
@@ -17,28 +18,35 @@
     <div class="container">
         <div class="item">
             <h2>Забронювати аудиторію</h2>
+            <% if(recommendation.length > 0) { %>
+                З огляду на Ваші попередні бронювання, радимо Вам забронювати такі аудиторії:
+                <ul>
+                    <% recommendation.forEach(function(item) { %>
+                        <li><%= item %></li>
+                    <% }); %>
+                </ul>
+            <% } %>
             <form class="createBookingForm" action="/main/createPage/create" method="post">
-                Назва: <input type="text" name="name" autocomplete="fal">
-                Дата: <input type="date" name="date" autocomplete="fal">
-                <!--Аудиторія: <input type="text" name="room" autocomplete="fal">-->
-                <select name="room" id="">
+                Назва: <input type="text" name="name" autocomplete="fal" required>
+                Дата: <input type="date" name="date" autocomplete="fal" required>
+                <!--Аудиторія: <input type="text.select-css" name="room" autocomplete="fal">-->
+                Аудиторія:
+                <select name="room" class="select-css" required>
                     <% rooms.forEach(function(item) { %>
-                        <option value="<%= item.name %>"><%= item.name %></option>
+                        <option value="<%= item.name %>"><%= item.name + ', кафедра ' + item.depName.toLowerCase() + ', ' + item.building %></option>
                     <% }); %>
                 </select>
-                № пари: <input type="text" name="lesson" autocomplete="fal">
-                Викладач: <input type="text" name="teacher" autocomplete="fal">
+                № пари: <input type="text" name="lesson" autocomplete="fal" required>
+                Викладач: <input type="text" name="teacher" autocomplete="fal" required>
                 <button type="submit">Створити</button>
-                <button class="go_back">Назад</button>
+                <button id="go_back" type="button">Назад</button>
             </form>
         </div>
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
-    $('.go_back').on('click', function(){
+    document.getElementById('go_back').addEventListener('click', function () {
         window.history.back();
     });
 

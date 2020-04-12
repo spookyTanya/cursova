@@ -10,6 +10,10 @@ const bodyParser = require('body-parser');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const mainRouter = require('./routes/main');
+const createRouter = require('./routes/createPage');
+const bookingRouter = require('./routes/bookings');
+const finderRouter = require('./routes/findRoom');
+const roomRouter = require('./routes/rooms');
 
 const app = express();
 
@@ -30,18 +34,19 @@ app.use(bodyParser.urlencoded({
 	extended: true
 }));
 
-let options = {
+//вернути
+/*let options = {
 	host: "us-cdbr-iron-east-03.cleardb.net",
   	user: "b137b481565ba4",
   	password: "3d0e4252",
   	database: "heroku_656924a3d6f9fc3"
 };
-var sessionStore = new MySQLStore(options);
+var sessionStore = new MySQLStore(options);*/
 
 app.use(session({
 	key: 'myCookie',
 	secret: 'secret12345',
-	store: sessionStore,
+	// store: sessionStore,
 	resave: false,
 	saveUninitialized: false,
 	cookie: {
@@ -61,6 +66,11 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/main', mainRouter);
+app.use('/main/createPage', createRouter);
+app.use('/main/mybooking', bookingRouter);
+app.use('/main/findRoom', finderRouter);
+app.use('/main/rooms', roomRouter);
+
 app.get('/', function(req, res){
 	res.redirect('/main');
 });

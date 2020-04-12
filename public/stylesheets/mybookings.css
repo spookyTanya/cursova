@@ -25,6 +25,8 @@
   padding: 20px;
   margin: 0 auto;
   min-width: 300px;
+  display: flex;
+  flex-wrap: wrap;
 }
 .item {
   color: #3F4756;
@@ -36,20 +38,22 @@
 }
 .item .edit-delete_links {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: baseline;
 }
 .item span{
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
 }
 .item p {
-  font-size: 18px;
+  font-size: 15px;
 }
 .item a {
   text-decoration: none;
-  padding: 5px 15px;
+  padding: 5px 0px;
   border-radius: 5px;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 700;
   color: #06558a;
 }

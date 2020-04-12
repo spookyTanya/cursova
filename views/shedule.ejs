@@ -14,7 +14,7 @@
     <%- include('header', {userName: userName}); -%>
     <div class="container">
         <div class="rooms_title row">
-            <h2>Розклад для аудиторії</h2>
+            <h2>Розклад для аудиторії №<%= room %></h2>
         </div>
         <% if (shedule.length > 0) { %>
             <div class="row rooms-container">
@@ -31,22 +31,18 @@
                         </div>
                 <% }); %>
             </div>
-            <button class="go_back">Назад</button>
+            <button id="go_back">Назад</button>
         <% } else { %>
             <div class="empty">
                 <p class="message">Для цієї аудиторії немає бронювання </p>
                 <a href="/main/createPage">Створити бронювання</a>
-                <button class="go_back">Назад</button>
+                <button id="go_back">Назад</button>
             </div>
         <% } %>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
 <script>
-    $('.go_back').on('click', function () {
+    document.getElementById('go_back').addEventListener('click', function () {
         window.history.back();
     });
 </script>

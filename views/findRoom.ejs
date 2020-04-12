@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css"/>
     <link rel="stylesheet" type="text/css" href="/stylesheets/editBooking.css"/>
     <link rel="stylesheet" type="text/css" href="/stylesheets/findRoom.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/createBooking.css"/>
 </head>
 <body>
 <div class="container-fluid main">
@@ -16,8 +17,15 @@
     <div class="container form-container">
         <h2>Знайти аудиторію</h2>
         <form class="findRoomForm" action="/main/findRoom/find" method="post">
-            Мінімальна кількість місць: <input type="text" name="Accommodation" autocomplete="fal">
-            Мінімальна кількість комп'ютерів: <input type="text" name="NumberOfComputers" autocomplete="fal">
+            Мінімальна кількість місць: <input type="text" name="R.Accommodation" autocomplete="fal">
+            Мінімальна кількість комп'ютерів: <input type="text" name="R.NumberOfComputers" autocomplete="fal">
+            Навчальний корпус:
+            <select name="buildings.Id" class="select-css">
+                <option value="" selected disabled hidden>Оберіть корпус</option>
+                <% buildingsArray.forEach(function(item) { %>
+                    <option value="<%= item.id %>"><%= item.name %></option>
+                <% }); %>
+            </select>
             <label class="label-container">Наявність проектора
                 <input type="checkbox" name="HasProjector">
                 <span class="checkmark"></span>

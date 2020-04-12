@@ -16,22 +16,20 @@
             <% if (booking) { %>
                 <form class="item" action="/main/mybooking/editSend" method="post">
                     Назва: <input type="text" value="<%= booking.name %>" name="name">
-                    Дата: <input type="date" value="<%= booking.date %>" name="newdate">
+                    Дата: <input type="date" value="<%= booking.date.slice(0, booking.date.indexOf('T')) %>" name="newdate">
                     Аудиторія: <input type="text" value="<%= booking.room %>" name="room">
                     № пари: <input type="text" value="<%= booking.lesson %>" name="lesson">
                     Викладач: <input type="text" value="<%= booking.teacher%>" name="teacher">
                     <input type="text" value="<%= booking.id%>" name="ID" class="hidden">
                     <button type="submit">Зберегти</button>
-                    <button class="go_back">Назад</button>
+                    <button id="go_back" type="button">Назад</button>
                 </form>
             <% } %>
         </div>
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script>
-    $('.go_back').on('click', function(){
+    document.getElementById('go_back').addEventListener('click', function () {
         window.history.back();
     });
 </script>
