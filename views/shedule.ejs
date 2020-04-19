@@ -11,12 +11,12 @@
 </head>
 <body>
 <div class="container-fluid main">
-    <%- include('header', {userName: userName}); -%>
+    <%- include('header', {user: user}); -%>
     <div class="container">
-        <div class="rooms_title row">
-            <h2>Розклад для аудиторії №<%= room %></h2>
-        </div>
         <% if (shedule.length > 0) { %>
+            <div class="rooms_title row">
+                <h2>Розклад для аудиторії №<%= room %></h2>
+            </div>
             <div class="row rooms-container">
                 <% shedule.forEach(function(item) { %>
                     <% var date = item.date %>
@@ -34,7 +34,7 @@
             <button id="go_back">Назад</button>
         <% } else { %>
             <div class="empty">
-                <p class="message">Для цієї аудиторії немає бронювання </p>
+                <p class="message">Для цієї аудиторії немає бронювань </p>
                 <a href="/main/createPage">Створити бронювання</a>
                 <button id="go_back">Назад</button>
             </div>

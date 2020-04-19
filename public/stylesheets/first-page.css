@@ -4,6 +4,13 @@
 	font-family: Roboto Slab;
 	background-image: linear-gradient(to left bottom, #fcffe1, #bbddc2, #79bab2, #4094a7, #2a6b96);
 }
+.reset h3{
+	color: #06558a;
+}
+
+.reset span{
+	font-size: 14px;
+}
 
 .first-page{
 	min-height: 300px;
@@ -46,6 +53,10 @@ li.active a{
 	display: block;
 	margin: 20px auto;
 }
+form a.link, form a.link:hover {
+	text-decoration: none;
+	/*color: #06558a;*/
+}
 .first-page form input{
 	height: 45px;
 	padding: 0 5px;
@@ -59,6 +70,7 @@ li.active a{
 	text-transform: uppercase;
 	color: #06558a;
 	letter-spacing: 1.3px;
+	font-size: 15px;
 }
 .first-page form button:hover{
 	color: #fff;

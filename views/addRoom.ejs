@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/createBooking.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/editBooking.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/findRoom.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/addRoom.css">
+</head>
+<body>
+<div class="container-fluid main">
+    <%- include('header', {user: user}); -%>
+    <div class="container">
+        <div class="item">
+            <h2>Створити аудиторію</h2>
+            <form class="createBookingForm" action="/main/addRoom/create" method="post">
+                Назва: <input type="text" name="name" autocomplete="fal" required>
+                Кількість місць: <input type="number" name="accommodation" autocomplete="fal" required>
+                Кількість комп'ютерів: <input type="number" name="noc" autocomplete="fal" required>
+                <select name="department" class="select-css" required>
+                    <option value="" selected disabled hidden>Оберіть кафедру</option>
+                    <% departmentsArray.forEach(function(item) { %>
+                        <option value="<%= item.id %>"><%= item.name %></option>
+                    <% }); %>
+                </select>
+                <label class="label-container">Наявність проектора
+                    <input type="checkbox" name="HasProjector">
+                    <span class="checkmark"></span>
+                </label>
+                <button type="submit">Створити</button>
+                <button id="go_back" type="button">Назад</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('go_back').addEventListener('click', function () {
+        window.history.back();
+    });
+
+</script>
+</body>
+</html>

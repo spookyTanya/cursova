@@ -1,3 +1,7 @@
+.main-navigation li:not(:nth-child(4)) a:after{
+    display: none;
+}
+
 .main-navigation li:nth-child(4) a:after{
     content: '';
     display: block;

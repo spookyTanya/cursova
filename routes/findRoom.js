@@ -19,13 +19,16 @@ router.get('', helper.redirectLogin, function (req, res) {
             buildingsArray.push(data);
         }
 
-        res.render('findRoom', {userName: req.session.userName, buildingsArray: buildingsArray});
+        let user = {
+            userName: req.session.userName,
+            isSuperUser: req.session.superuser
+        };
+
+        res.render('findRoom', {user: user, buildingsArray: buildingsArray});
     });
 });
 
 router.post('/find', helper.redirectLogin, function (req, res) {
-    console.log(req.body);
-    // let sql = 'SELECT * FROM `rooms` WHERE ';
     let sql = 'SELECT R.Id, R.Name, R.Accommodation, R.NumberOfComputers, R.HasProjector, `departments`.`DepartmentName`, `buildings`.`BuildingName`, `buildings`.`Street`, `buildings`.`HouseNumber` FROM `rooms` as R ' +
         'INNER JOIN `departments` ON `departments`.`Id` = R.`DepartmentId` ' +
         'INNER JOIN `buildings` ON `buildings`.`Id` = `departments`.`BuildingId` WHERE ';
@@ -76,7 +79,12 @@ router.post('/find', helper.redirectLogin, function (req, res) {
             }
         }
 
-        res.render('rooms', {rooms: roomsArray, userName: req.session.userName});
+        let user = {
+            userName: req.session.userName,
+            isSuperUser: req.session.superuser
+        };
+
+        res.render('rooms', {rooms: roomsArray, user: user});
     });
 });
 

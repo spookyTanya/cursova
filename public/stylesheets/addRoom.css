@@ -1,0 +1,12 @@
+.main-navigation li:not(:nth-child(5)) a:after{
+    display: none;
+}
+
+.main-navigation li:nth-child(5) a:after{
+    content: '';
+    display: block;
+    width: auto;
+    height: 2px;
+    margin-top: 5px;
+    background-color: #06558a;
+}

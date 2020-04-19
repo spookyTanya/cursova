@@ -37,7 +37,12 @@ function removeElement(array, id){
 }
 
 router.get('/', helper.redirectLogin, function (req, res) {
-    res.render('mybookings', {items: req.session.allBooking, userName: req.session.userName});
+    let user = {
+        userName: req.session.userName,
+        isSuperUser: req.session.superuser
+    };
+
+    res.render('mybookings', {items: req.session.allBooking, user: user});
 });
 
 router.get('/delete/:id', helper.redirectLogin, function (req, res) {
@@ -78,7 +83,13 @@ router.get('/edit/:id', helper.redirectLogin, function (req, res) {
 
     let copy = [...req.session.allBooking];
     let editElem = copy.filter(elem => elem.id === parseInt(req.params.id));
-    res.render('editBooking', {booking: editElem[0], userName: req.session.userName});
+
+    let user = {
+        userName: req.session.userName,
+        isSuperUser: req.session.superuser
+    };
+
+    res.render('editBooking', {booking: editElem[0], user: user});
 
 });
 

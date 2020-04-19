@@ -1,16 +1,3 @@
-<!--<div class="header row">
-    <div class="navigtion-wraper">
-        <ul class="main-navigation ">
-            <li><a href="/main/mybooking">Мої бронювання</a></li>
-            <li><a href="/main/createPage">Забронювати аудиторію</a></li>
-            <li><a href="/main/rooms">Аудиторії</a></li>
-            <li><a href="/main/findRoom">Знайти аудиторію</a></li>
-            <li><a href="/main/logout">Вийти</a></li>
-            <li class="user">Вітаю, <%= userName %> </li>
-        </ul>
-    </div>
-</div>-->
-
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -26,8 +13,11 @@
                 <li><a href="/main/createPage">Забронювати аудиторію</a></li>
                 <li><a href="/main/rooms">Аудиторії</a></li>
                 <li><a href="/main/findRoom">Знайти аудиторію</a></li>
+                <% if (user.isSuperUser === 1) { %>
+                    <li><a href="/main/addRoom">Додати аудиторію</a></li>
+                <% } %>
                 <li><a href="/main/logout">Вийти</a></li>
-                <li class="user">Вітаю, <%= userName %> </li>
+                <li class="user">Вітаю, <%= user.userName %> </li>
             </ul>
         </div>
     </div>

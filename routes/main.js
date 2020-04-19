@@ -61,8 +61,6 @@ router.get('/', helper.redirectLogin, function (req, res) {
 
     let sql;
 
-    console.log(midnight);
-
     if (req.session.superuser === 1) {
         sql = 'SELECT shedule.Id, NumberOfLesson, Teacher, Date, shedule.Name, R.Name as rName, `departments`.`DepartmentName`, `buildings`.`BuildingName`, `buildings`.`Street`, `buildings`.`HouseNumber` FROM `shedule`, `rooms` as R ' +
             'INNER JOIN `departments` ON `departments`.`Id` = R.`DepartmentId` ' +
@@ -114,8 +112,12 @@ router.get('/', helper.redirectLogin, function (req, res) {
 
         req.session.notifications = notificObj;
         req.session.allBooking = bookingsArray;
+        let user = {
+            userName: req.session.userName,
+            isSuperUser: req.session.superuser
+        };
 
-        res.render('main', {userName: req.session.userName, notification: req.session.notifications, days: days, weekDate: weekDate});
+        res.render('main', {user: user, notification: req.session.notifications, days: days, weekDate: weekDate});
     });
 
 });

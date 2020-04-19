@@ -8,12 +8,12 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css"/>
     <link rel="stylesheet" type="text/css" href="/stylesheets/editBooking.css"/>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/findRoom.css"/>
     <link rel="stylesheet" type="text/css" href="/stylesheets/createBooking.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/findRoom.css"/>
 </head>
 <body>
 <div class="container-fluid main">
-    <%- include('header', {userName: userName}); -%>
+    <%- include('header', {user: user}); -%>
     <div class="container form-container">
         <h2>Знайти аудиторію</h2>
         <form class="findRoomForm" action="/main/findRoom/find" method="post">

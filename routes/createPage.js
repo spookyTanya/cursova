@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 const con = require('../db.js');
-const helper =  require("../constants");
+const helper = require("../constants");
 
 function sendUserMail(userMail, bookingInfo) {
     const mailOptions = {
-        from: 'tanyabilanyuk@gmail.com',
+        from: process.env.mailSender,
         to: userMail,
         subject: 'Бронювання аудиторій',
         html: `<div>Вітаю, Ви створили бронювання аудиторії! <br>
@@ -71,7 +71,12 @@ router.get('/', helper.redirectLogin, function (req, res) {
             roomsArray.push(element);
         }
 
-        res.render('createBooking', {userName: req.session.userName, rooms: roomsArray, recommendation: createRecommendations(req.session.allBooking)});
+        let user = {
+            userName: req.session.userName,
+            isSuperUser: req.session.superuser
+        };
+
+        res.render('createBooking', {user: user, rooms: roomsArray, recommendation: createRecommendations(req.session.allBooking)});
     });
 });
 
