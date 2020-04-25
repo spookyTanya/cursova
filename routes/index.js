@@ -158,7 +158,7 @@ function sendResetEmail(email, hash) {
 		to:      email,
 		subject: 'Бронювання аудиторій',
 		html:    `<div>Щоб відновити обліковий запис, перейдіть по посиланню: <br>
-                  <a href="http://localhost:5000/forgot/${hash}">Створити новий пароль</a>
+                  <a href="${process.env.ORIGIN}forgot/${hash}">Створити новий пароль</a>
                    </div>`,
 	};
 
