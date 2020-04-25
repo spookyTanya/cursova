@@ -19,12 +19,12 @@
     "morgan": "~1.9.0",
     "mysql": "^2.16.0",
     "nodemailer": "^5.1.1",
-    "password-hash": "^1.2.2"
+    "password-hash": "^1.2.2",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
-    "dotenv": "^8.2.0"
   }
 }
