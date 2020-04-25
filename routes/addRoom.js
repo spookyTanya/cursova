@@ -28,7 +28,6 @@ router.get('', helper.redirectLogin, function (req, res) {
 });
 
 router.post('/create', helper.redirectLogin, function (req, res) {
-    console.log(req.body)
     let sql = 'SELECT * FROM `rooms` WHERE Name = "' + req.body.name + '" AND DepartmentId = "' + req.body.department + '"';
 
     con.query(sql, (error, result, fields) => {
@@ -39,7 +38,6 @@ router.post('/create', helper.redirectLogin, function (req, res) {
             sql = 'INSERT INTO `rooms`(`Name`, `Accommodation`, `NumberOfComputers`, `HasProjector`, `DepartmentId`) ' +
                 'VALUES ("' + req.body.name + '", ' + req.body.accommodation + ', ' + req.body.noc + ', ' + projector + ', ' + req.body.department + ')';
 
-            console.log(sql);
             con.query(sql, (error, result, fields) => {
                 res.redirect('/main/rooms');
             });

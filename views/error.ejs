@@ -1,6 +1,23 @@
-<h1><%= message %></h1>
-<script>
-    setTimeout( () => {
-        window.location.href = '/main';
-    }, 5000);
-</script>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+    body{
+        margin: 0;
+    }
+    .center{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: Roboto Slab;
+        background-image: linear-gradient(to left bottom, #fcffe1, #bbddc2, #79bab2, #4094a7, #2a6b96);
+        color: #06558a;
+    }
+</style>
+<div class="center">
+    <h2><%= message %></h2>
+    <script>
+        setTimeout( () => {
+            window.location.href = '/main';
+        }, 5000);
+    </script>
+</div>

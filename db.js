@@ -7,7 +7,8 @@ var con = mysql.createPool({
   database: "heroku_656924a3d6f9fc3"
 });
 
-/*var con = mysql.createConnection({
+/*
+var con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
@@ -20,6 +21,7 @@ con.connect(function(err) {
 
 setInterval(function () {
     con.query('SELECT 1 from users');
-}, 5000);*/
+}, 5000);
+*/
 
 module.exports = con;

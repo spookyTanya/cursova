@@ -2,39 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const con = require('../db.js');
-const helper =  require("../constants");
-
-function sendUserMail(userMail, bookingInfo) {
-    const mailOptions = {
-        from: 'tanyabilanyuk@gmail.com',
-        to: userMail,
-        subject: 'Бронювання аудиторій',
-        html: `<div>Ваше бронювання №${bookingInfo.id} було змінено <br>
-                Нова інформація: <br>
-                Назва: ${bookingInfo.name} <br>
-                Дата: ${bookingInfo.date} <br>
-                Номер пари: ${bookingInfo.lesson} <br>
-                Кабінет: ${bookingInfo.roomName} </div>`,
-    };
-
-    helper.emailTransporter.sendMail(mailOptions);
-}
-
-function checkDate(date) {
-    let today = new Date();
-    let targetDate = new Date(date);
-
-    return targetDate - today > 0;
-}
-
-function removeElement(array, id){
-    array.forEach((elem, index) => {
-        if (elem.id === parseInt(id)) {
-            array = array.splice(index, 1);
-            return;
-        }
-    });
-}
+const helper = require("../constants");
 
 router.get('/', helper.redirectLogin, function (req, res) {
     let user = {
@@ -90,7 +58,6 @@ router.get('/edit/:id', helper.redirectLogin, function (req, res) {
     };
 
     res.render('editBooking', {booking: editElem[0], user: user});
-
 });
 
 router.post('/editSend', helper.redirectLogin, function (req, res) {
@@ -103,38 +70,65 @@ router.post('/editSend', helper.redirectLogin, function (req, res) {
         teacher: req.body.teacher
     };
 
-    /*let today = new Date();
-    let targetDate = new Date(req.body.newdate);
-
-    if (targetDate - today < 0) {
-    } else {
-        console.log('fine');
-    }*/
-
     if(checkDate(req.body.newdate) === true) {
-
         const check = 'SELECT Date, rooms.Name, NumberOfLesson FROM `shedule`, `rooms` WHERE `Date` = "' + data.date + '" AND `NumberOfLesson` = "' + data.lesson + '" AND `RoomId` = (SELECT Name FROM `rooms` WHERE Name = "' + data.roomName + '")';
 
         con.query(check, (error, result, fields) => {
-            if (result.length < 1) {
-
-                const sql = 'UPDATE `shedule` SET `NumberOfLesson` = "' + data.lesson + '", `Teacher` = "' + data.teacher + '", `Date` = "' + data.date + '", `Name` = "' + data.name + '", `RoomId` = (SELECT Id FROM `rooms` WHERE Name = "' + data.roomName + '") WHERE `Id` = "' + data.id + '"';
-                console.log(sql);
-
-                con.query(sql, (error, result, fields) => {
-                    if (error) {
-                        console.log('error', error);
-                    }
-
-                    // sendUserMail(req.session.email, data);
-
-                    res.redirect('/main');
-                });
-            }
+            updateShedule(data, req, res, result);
         });
     } else {
         res.render('error', {message: 'Вибрана дата вже минула'});
     }
 });
+
+function updateShedule(data, request, response, prevResult) {
+    if (prevResult.length < 1) {
+
+        const sql = 'UPDATE `shedule` SET `NumberOfLesson` = "' + data.lesson + '", `Teacher` = "' + data.teacher + '", `Date` = "' + data.date + '", `Name` = "' + data.name + '", `RoomId` = (SELECT Id FROM `rooms` WHERE Name = "' + data.roomName + '") WHERE `Id` = "' + data.id + '"';
+        console.log(sql);
+
+        con.query(sql, (error, result, fields) => {
+            if (error) {
+                console.log('error', error);
+            }
+
+            sendUserMail(request.session.email, data);
+
+            response.redirect('/main');
+        });
+    }
+}
+
+function sendUserMail(userMail, bookingInfo) {
+    const mailOptions = {
+        from: process.env.EMAIL,
+        to: userMail,
+        subject: 'Бронювання аудиторій',
+        html: `<div>Ваше бронювання №${bookingInfo.id} було змінено <br>
+                Нова інформація: <br>
+                Назва: ${bookingInfo.name} <br>
+                Дата: ${bookingInfo.date} <br>
+                Номер пари: ${bookingInfo.lesson} <br>
+                Кабінет: ${bookingInfo.roomName} </div>`,
+    };
+
+    helper.emailTransporter.sendMail(mailOptions);
+}
+
+function checkDate(date) {
+    let today = new Date();
+    let targetDate = new Date(date);
+
+    return targetDate - today > 0;
+}
+
+function removeElement(array, id) {
+    array.forEach((elem, index) => {
+        if (elem.id === parseInt(id)) {
+            array = array.splice(index, 1);
+            return;
+        }
+    });
+}
 
 module.exports = router;

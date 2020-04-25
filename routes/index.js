@@ -23,7 +23,6 @@ router.post('/signin', redirectMain,  function(req, res) {
 		if (error) {
 			console.log('error', error);
 		}
-		// if (result.length > 0) {
 		if (result.length > 0 && checkPassword(data.password, result[0].Password) === true) {
             assignSession(req.session, data.email, result[0]);
 
@@ -45,27 +44,7 @@ router.post('/signup', redirectMain, function(req, res) {
 
     const sql = 'SELECT * FROM `users` WHERE `Email` = "' + data.email + '"';
     con.query(sql, (error, result, fields) => {
-		if(error) {
-			console.log('error', error);
-		}
-		if(result.length > 0) {
-			res.render('error', {message: 'Електронна пошта ' + data.email + ' вже зайнята'});
-		} else {
-            const hash = passwordHash.generate(data.password);
-			const insert = 'INSERT INTO `users` (`Name`, `Email`, `Password`, `Surname`) VALUES ("'+  data.name + '", "' + data.email + '", "' + hash + '", "' + data.surname + '") ';
-			con.query(insert, function processNewUserInfo(err, result) {
-			    if (err) throw err;
-				const sql = 'SELECT `Id`, `IsSuperuser` FROM `users` WHERE `Email` = "' + data.email + '"';
-				con.query(sql, (error, result, fields) => {
-					if(result.length > 0){
-
-						assignSession(req.session, data.email, result[0]);
-
-						res.redirect('/main');
-					}
-				});
-		  	});
-		}
+		addNewUser(data, req, res, result);
 	});
 });
 
@@ -127,9 +106,25 @@ router.post('/resetPassword', redirectMain, function (req, res) {
 	});
 });
 
-/*function processNewUserInfo(userData, request, response) {
+function addNewUser(userData, request, response, prevRes) {
+	if (prevRes.length > 0) {
+		response.render('error', {message: 'Електронна пошта ' + userData.email + ' вже зайнята'});
+	} else {
+		const hash = passwordHash.generate(userData.password);
+		const insert = 'INSERT INTO `users` (`Name`, `Email`, `Password`, `Surname`) VALUES ("'+  userData.name + '", "' + userData.email + '", "' + hash + '", "' + userData.surname + '") ';
 
-}*/
+		con.query(insert, function processNewUserInfo() {
+			const sql = 'SELECT `Id`, `IsSuperuser` FROM `users` WHERE `Email` = "' + userData.email + '"';
+			con.query(sql, (error, result, fields) => {
+				if(result.length > 0){
+					assignSession(request.session, userData.email, result[0]);
+
+					response.redirect('/main');
+				}
+			});
+		});
+	}
+}
 
 
 function redirectMain(req, res, next) {
@@ -158,9 +153,8 @@ function assignSession(session, email, otherData) {
 }
 
 function sendResetEmail(email, hash) {
-	console.log(process.env.mailSender)
 	const mailOptions = {
-		from:    process.env.mailSender,
+		from:    process.env.EMAIL,
 		to:      email,
 		subject: 'Бронювання аудиторій',
 		html:    `<div>Щоб відновити обліковий запис, перейдіть по посиланню: <br>

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/r', function(req, res, next) {
-  res.send('respond with a resource');
+  res.render('error', {message: 'Ви ввели неправильну електронну пошту або пароль'})
 });
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 const redirectLogin = async (req, res, next) => {
     if (req.session.userName) {
@@ -11,17 +12,8 @@ const redirectLogin = async (req, res, next) => {
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'tanyabilanyuk@gmail.com',
-        pass: 'asahdude668841'
-    }
-});
-
-transporter.set('oauth2_provision_cb', (user, renew, callback)=>{
-    let accessToken = userTokens[user];
-    if(!accessToken){
-        return callback(new Error('Unknown user'));
-    }else{
-        return callback(null, accessToken);
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
     }
 });
 
