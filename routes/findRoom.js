@@ -34,22 +34,33 @@ router.post('/find', helper.redirectLogin, function (req, res) {
         'INNER JOIN `buildings` ON `buildings`.`Id` = `departments`.`BuildingId` WHERE ';
 
     let k = 0;
-    for (let [key, value] of Object.entries(req.body)) {
+
+    let values = Object.entries(req.body)
+    let sheduleArray = values.filter(function (elem) {
+        return elem[0].indexOf('shedule') !== -1;
+    });
+    let roomArray = values.filter(function (elem) {
+        return elem[0].indexOf('R') !== -1;
+    });
+    let remaining = values.filter(function (elem) {
+        return elem[0].indexOf('shedule') === -1 && elem[0].indexOf('R') === -1;
+    });
+
+    for (let [key, value] of remaining) {
         if (key !== 'HasProjector' && value !== '') {
             if (k > 0) {
                 sql += ' AND ';
             }
-            if (key.indexOf('R') !== -1) {
-                sql += key + ' >= ' + value;
-            } else {
-                sql += key + ' = ' + value;
-            }
+
+            sql += key + ' = ' + value;
             k++;
         }
         if (key === 'HasProjector' && value === 'on') {
             sql += ' AND ' + key  + ' = 1 ';
         }
     }
+
+    sql = addSheduleCheck(addRoomCheck(sql, roomArray), sheduleArray);
 
     console.log(sql)
     con.query(sql, (error, result, fields) => {
@@ -87,5 +98,34 @@ router.post('/find', helper.redirectLogin, function (req, res) {
         res.render('rooms', {rooms: roomsArray, user: user});
     });
 });
+
+function addRoomCheck(sql, array) {
+    if (array.length > 0) {
+        sql += ' AND ';
+        array.forEach(function (elem, index) {
+            if (index !== 0) {
+                sql += ' AND '
+            }
+            sql += elem[0] + ' >= ' + elem[1];
+        });
+    }
+
+    return sql;
+}
+
+function addSheduleCheck(sql, array){
+    if (array.length > 0) {
+        sql += ' AND NOT EXISTS(SELECT * FROM `shedule` WHERE ';
+        array.forEach(function (elem, index) {
+            if (index !== 0) {
+                sql += ' AND '
+            }
+            sql += elem[0] + ' = "' + elem[1] + '"';
+        });
+        sql += ')';
+    }
+
+    return sql;
+}
 
 module.exports = router;

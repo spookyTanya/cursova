@@ -13,8 +13,6 @@
 <body>
 <div class="container-fluid main">
     <%- include('header', {user: user}); -%>
-    <!--<div class="row justify-content-center">-->
-    <!--<div class="col-sm-12 col-md-8 ">-->
     <div class="container">
         <div class="item">
             <h2>Забронювати аудиторію</h2>
@@ -29,14 +27,18 @@
             <form class="createBookingForm" action="/main/createPage/create" method="post">
                 Назва: <input type="text" name="name" autocomplete="fal" required>
                 Дата: <input type="date" name="date" autocomplete="fal" required>
-                <!--Аудиторія: <input type="text.select-css" name="room" autocomplete="fal">-->
-                Аудиторія:
-                <select name="room" class="select-css" required>
-                    <% rooms.forEach(function(item) { %>
-                        <option value="<%= item.name %>"><%= item.name + ', кафедра ' + item.depName.toLowerCase() + ', ' + item.building %></option>
+                Навчальний корпус: 
+                <select name="department" id="departmentSelect" class="select-css" required>
+                    <option value="" selected disabled hidden>Оберіть корпус</option>
+                    <% buildings.forEach(function(item) { %>
+                        <option value="<%= item.id %>"><%= item.buildName %></option>
                     <% }); %>
                 </select>
-                № пари: <input type="text" name="lesson" autocomplete="fal" required>
+                Аудиторія:
+                <select name="room" id="rooms" class="select-css" required>
+
+                </select>
+                Номер заняття: <input type="text" name="lesson" autocomplete="fal" required>
                 Викладач: <input type="text" name="teacher" autocomplete="fal" required>
                 <button type="submit">Створити</button>
                 <button id="go_back" type="button">Назад</button>
@@ -44,12 +46,7 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.getElementById('go_back').addEventListener('click', function () {
-        window.history.back();
-    });
-
-</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/scripts/events.js"></script>
 </body>
 </html>

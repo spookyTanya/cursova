@@ -5,20 +5,20 @@ const con = require('../db.js');
 const helper = require("../constants");
 
 router.get('/', helper.redirectLogin, function (req, res) {
-    let roomsArray = [];
+    let buildingsArray = [];
 
-    const checkRoom = 'SELECT R.Name, `departments`.`DepartmentName`, `buildings`.`BuildingName` FROM `rooms` as R ' +
+    /*const checkRoom = 'SELECT R.Name, `departments`.`DepartmentName`, `buildings`.`BuildingName` FROM `rooms` as R ' +
         'INNER JOIN `departments` ON `departments`.`Id` = R.`DepartmentId` ' +
-        'INNER JOIN `buildings` ON `buildings`.`Id` = `departments`.`BuildingId`';
-    con.query(checkRoom, (error, result, fields) => {
+        'INNER JOIN `buildings` ON `buildings`.`Id` = `departments`.`BuildingId`';*/
+    const getBuildings = 'SELECT BuildingName, Id FROM `buildings`';
+    con.query(getBuildings, (error, result, fields) => {
         for (let i = 0; i < result.length; i++) {
             let element = {
-                name: result[i].Name,
-                depName: result[i].DepartmentName,
-                building: result[i].BuildingName
+                id: result[i].Id,
+                buildName: result[i].BuildingName,
             };
 
-            roomsArray.push(element);
+            buildingsArray.push(element);
         }
 
         let user = {
@@ -26,7 +26,7 @@ router.get('/', helper.redirectLogin, function (req, res) {
             isSuperUser: req.session.superuser
         };
 
-        res.render('createBooking', {user: user, rooms: roomsArray, recommendation: createRecommendations(req.session.allBooking)});
+        res.render('createBooking', {user: user, buildings: buildingsArray, recommendation: createRecommendations(req.session.allBooking)});
     });
 });
 
@@ -44,7 +44,7 @@ router.post('/create', helper.redirectLogin, function (req, res) {
     if (targetDate - today < 0) {
         res.render('error', {message: 'Вибрана дата вже минула'});
     } else {
-        const check = 'SELECT Date, rooms.Name, NumberOfLesson FROM `shedule`, `rooms` WHERE `Date` = "' + data.date + '" AND `NumberOfLesson` = "' + data.lesson + '" AND `RoomId` = (SELECT Id FROM `rooms` WHERE Name = "' + data.room + '")';
+        const check = 'SELECT Date, rooms.Name FROM `shedule`, `rooms` WHERE `Date` = "' + data.date + '" AND `NumberOfLesson` = "' + data.lesson + '" AND `RoomId` = (SELECT Id FROM `rooms` WHERE Name = "' + data.room + '")';
         // console.log(check);
         con.query(check, (error, result, fields) => {
             addNewBooking(data, res, req, result);
@@ -53,9 +53,27 @@ router.post('/create', helper.redirectLogin, function (req, res) {
     }
 });
 
+router.get('/getRooms/:buildingId', function (req, res) {
+    let roomsArray = [];
+    const getRooms = 'SELECT R.Name, R.Id, `departments`.`DepartmentName` FROM `rooms` as R ' +
+        'INNER JOIN `departments` ON `departments`.`Id` = R.`DepartmentId` ' +
+        'WHERE `departments`.`BuildingId` = ' + req.params.buildingId;
+
+    con.query(getRooms, (error, result, fields) => {
+        for (let i = 0; i < result.length; i++) {
+            roomsArray.push({
+                id: result[i].Id,
+                depName: result[i].DepartmentName,
+                name: result[i].Name
+            });
+        }
+        res.json({rooms: roomsArray});
+    });
+});
+
 function addNewBooking(data, response, request, prevRes) {
     if (prevRes.length < 1) {
-        const sql = 'INSERT INTO `shedule` (`NumberOfLesson`, `Teacher`, `UserID`, `Date`, `Name`, `RoomId`) VALUES ("' + data.lesson + '", "' + data.teacher + '", "' + request.session.userId + '", "' + data.date + '", "' + data.name + '", (SELECT Id FROM `rooms` WHERE Name = "' + data.room + '"))';
+        const sql = 'INSERT INTO `shedule` (`NumberOfLesson`, `Teacher`, `UserID`, `Date`, `Name`, `RoomId`) VALUES ("' + data.lesson + '", "' + data.teacher + '", "' + request.session.userId + '", "' + data.date + '", "' + data.name + '", "' + data.room + '")';
         console.log(sql);
         con.query(sql, (error, result, fields) => {
             if (error) {

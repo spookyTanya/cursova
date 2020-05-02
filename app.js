@@ -36,18 +36,18 @@ app.use(bodyParser.urlencoded({
 }));
 
 //вернути
-let options = {
+/*let options = {
 	host: "us-cdbr-iron-east-03.cleardb.net",
   	user: "b137b481565ba4",
   	password: "3d0e4252",
   	database: "heroku_656924a3d6f9fc3"
 };
-let sessionStore = new MySQLStore(options);
+let sessionStore = new MySQLStore(options);*/
 
 app.use(session({
 	key: 'myCookie',
 	secret: 'secret12345',
-	store: sessionStore,
+	// store: sessionStore,
 	resave: false,
 	saveUninitialized: false,
 	cookie: {
